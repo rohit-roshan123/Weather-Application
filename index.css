@@ -1,0 +1,101 @@
+body{
+
+    background: url(images/2148933766.jpg);
+    background-position: bottom;
+    background-attachment: fixed;
+    font-family: "comfortaa", sans-serif;
+    color: white;
+}
+
+.searchBar
+{
+    height: 10vh;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.searchBarParentDiv
+{
+    width: 50%;
+    height: fit-content;
+    position: relative;
+
+}
+
+.inputfield{
+
+    width: 100%;
+    border-radius: 25px;
+    padding: 10px;
+}
+
+.searchIcon{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.searchIcon:hover{
+
+    cursor: pointer;
+}
+
+.mainContentParentDiv{
+
+    height: 90vh;
+
+}
+.leftDiv{
+
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+ 
+}
+
+.rightDiv{
+
+    width: 70%;
+    height: 100%;
+    border: 1px solid blue;
+}
+
+.leftChild{
+
+    background: rgba(212, 212, 212, 0.4);
+    width: 85%;
+    height: 40vh;
+    margin: auto;
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
+
+
+
+}
+
+.currentTempDiv h6{
+
+    font-size: larger;
+
+}
+
+#cityName{
+
+    font-size: xx-large;
+}
+
+#cityTemp{
+
+    font-size: x-large;
+
+}
+
+#comingFiveDaysTitle{
+
+    font-size: x-large;
+}
+
