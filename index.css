@@ -1,6 +1,6 @@
 body{
 
-    background: url(images/2148933766.jpg);
+    background: url(images/pexels-pixabay-33834.jpg);
     background-position: bottom;
     background-attachment: fixed;
     font-family: "comfortaa", sans-serif;
@@ -74,7 +74,7 @@ body{
     height: 40vh;
     margin: auto;
     border-radius: 15px;
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(1000px);
 
 
 
@@ -118,6 +118,7 @@ body{
     border-radius: 15px;
     padding: 5% 2%;
     align-items: center;
+    backdrop-filter: blur(1000px);
 
 }
 
@@ -126,7 +127,7 @@ body{
     background: rgba(212, 212, 212, 0.4);
     width: 45%;
     height: 85%;
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(1000px);
     border-radius: 15px;
 
 }
@@ -138,7 +139,7 @@ body{
     width: fit-content;
     padding: 15px;
     border-radius: 15px;
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(1000px);
     display: flex;
     flex-direction: column;
     gap: 10px;
