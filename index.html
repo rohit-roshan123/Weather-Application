@@ -37,52 +37,57 @@
 
             </div>
             <div class="nextFiveDays leftChild p-3 d-flex flex-column gap-2">
-                <h6 class="m-0" id="comingFiveDaysTitle">Coming 5 Days</h6>
-                <div class="d-flex flex-column gap-2">
-                <div class="forcastrow d-flex align-items-center justify-content-between" >
-                    <div class="d-flex gap-1 align-items-center">
-                        <img src="./images/cloud.png" alt="" width="35px">
-                        <h6 class="m-0">0 &deg; C</h6>
-                    </div>
-                    <h6 class="m-0">Saturday</h6>
-                    <h6 class="m-0">08-03-2025</h6>
-                </div>
-                <div class="forcastrow d-flex align-items-center justify-content-between" >
-                    <div class="d-flex gap-1 align-items-center">
-                        <img src="./images/cloud.png" alt="" width="35px">
-                        <h6 class="m-0">0 &deg; C</h6>
-                    </div>
-                    <h6 class="m-0">Saturday</h6>
-                    <h6 class="m-0">08-03-2025</h6>
-                </div>
-                <div class="forcastrow d-flex align-items-center justify-content-between" >
-                    <div class="d-flex gap-1 align-items-center">
-                        <img src="./images/cloud.png" alt="" width="35px">
-                        <h6 class="m-0">0 &deg; C</h6>
-                    </div>
-                    <h6 class="m-0">Saturday</h6>
-                    <h6 class="m-0">08-03-2025</h6>
-                </div>
-                <div class="forcastrow d-flex align-items-center justify-content-between" >
-                    <div class="d-flex gap-1 align-items-center">
-                        <img src="./images/cloud.png" alt="" width="35px">
-                        <h6 class="m-0">0 &deg; C</h6>
-                    </div>
-                    <h6 class="m-0">Saturday</h6>
-                    <h6 class="m-0">08-03-2025</h6>
-                </div>
-                <div class="forcastrow d-flex align-items-center justify-content-between" >
-                    <div class="d-flex gap-1 align-items-center">
-                        <img src="./images/cloud.png" alt="" width="35px">
-                        <h6 class="m-0">0 &deg; C</h6>
-                    </div>
-                    <h6 class="m-0">Saturday</h6>
-                    <h6 class="m-0">08-03-2025</h6>
-                </div>
-
-                </div>
-                
+    <h6 class="m-0" id="comingFiveDaysTitle">Coming 5 Days</h6>
+    <div class="d-flex flex-column gap-2">
+        
+        <div class="forcastrow d-flex align-items-center justify-content-between" id="day1">
+            <div class="d-flex gap-1 align-items-center">
+                <img id="icon1" src="./images/cloud.png" alt="" width="35px">
+                <h6 class="m-0" id="temp1">0 &deg; C</h6>
             </div>
+            <h6 class="m-0" id="weekday1">Saturday</h6>
+            <h6 class="m-0" id="date1">08-03-2025</h6>
+        </div>
+
+        <div class="forcastrow d-flex align-items-center justify-content-between" id="day2">
+            <div class="d-flex gap-1 align-items-center">
+                <img id="icon2" src="./images/cloud.png" alt="" width="35px">
+                <h6 class="m-0" id="temp2">0 &deg; C</h6>
+            </div>
+            <h6 class="m-0" id="weekday2">Saturday</h6>
+            <h6 class="m-0" id="date2">08-03-2025</h6>
+        </div>
+
+        <div class="forcastrow d-flex align-items-center justify-content-between" id="day3">
+            <div class="d-flex gap-1 align-items-center">
+                <img id="icon3" src="./images/cloud.png" alt="" width="35px">
+                <h6 class="m-0" id="temp3">0 &deg; C</h6>
+            </div>
+            <h6 class="m-0" id="weekday3">Saturday</h6>
+            <h6 class="m-0" id="date3">08-03-2025</h6>
+        </div>
+
+        <div class="forcastrow d-flex align-items-center justify-content-between" id="day4">
+            <div class="d-flex gap-1 align-items-center">
+                <img id="icon4" src="./images/cloud.png" alt="" width="35px">
+                <h6 class="m-0" id="temp4">0 &deg; C</h6>
+            </div>
+            <h6 class="m-0" id="weekday4">Saturday</h6>
+            <h6 class="m-0" id="date4">08-03-2025</h6>
+        </div>
+
+        <div class="forcastrow d-flex align-items-center justify-content-between" id="day5">
+            <div class="d-flex gap-1 align-items-center">
+                <img id="icon5" src="./images/cloud.png" alt="" width="35px">
+                <h6 class="m-0" id="temp5">0 &deg; C</h6>
+            </div>
+            <h6 class="m-0" id="weekday5">Saturday</h6>
+            <h6 class="m-0" id="date5">08-03-2025</h6>
+        </div>
+
+    </div>
+</div>
+
 
         </div>
 
@@ -260,7 +265,45 @@
 
         }
 
-        
+
+        async function getNextFiveDaysWeather() {
+    const apiKey = "28abf267a849d0bd9744aafb681b4acf";  // Replace with your actual OpenWeatherMap API key
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=17.69&lon=83.2093&appid=${apiKey}&units=metric`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const addedDates = new Set();
+        let count = 1;
+
+        for (const item of data.list) {
+            const date = item.dt_txt.split(" ")[0];
+
+            if (!addedDates.has(date)) {
+                addedDates.add(date);
+
+                const temperature = Math.round(item.main.temp);
+                const icon = `https://openweathermap.org/img/wn/${item.weather[0].icon}.png`;
+                const weekday = new Date(date).toLocaleDateString('en-US', { weekday: 'long' });
+                const formattedDate = new Date(date).toLocaleDateString('en-GB');
+
+                // Update corresponding HTML elements
+                document.getElementById(`temp${count}`).innerHTML = `${temperature} &deg; C`;
+                document.getElementById(`icon${count}`).src = icon;
+                document.getElementById(`weekday${count}`).innerText = weekday;
+                document.getElementById(`date${count}`).innerText = formattedDate;
+
+                count++;
+                if (count > 5) break;
+            }
+        }
+    } catch (error) {
+        console.error("Error fetching weather data:", error);
+    }
+}
+
+
 
 
         async function fetchData(){
@@ -301,6 +344,7 @@
             let long=formattedData.coord.lon;
 
             fetchaqidata(lat, long);
+            getNextFiveDaysWeather();
 
 
         }
