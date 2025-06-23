@@ -90,10 +90,10 @@
             <div class="rightrow rowone d-flex gap-2 justify-content-between align-items-center p-3">
                 <div class="extrametric d-flex gap-3">
 
-                    <img src="/images/wind (1).png" alt="" width="35px">
+                    <img src="/images/flood.png" alt="" width="35px">
                     <div>
-                        <h6 class="m-0">metric name</h6>
-                        <h6 class="m-0">metric value</h6>
+                        <h6 class="m-0">Humidity</h6>
+                        <h6 class="m-0" id="humidity">-</h6>
                     </div>
 
                 </div>
@@ -101,26 +101,26 @@
 
                     <img src="/images/wind (1).png" alt="" width="35px">
                     <div>
-                        <h6 class="m-0">metric name</h6>
-                        <h6 class="m-0">metric value</h6>
+                        <h6 class="m-0">Pressure</h6>
+                        <h6 class="m-0" id="pressure">-</h6>
                     </div>
 
                 </div>
                 <div class="extrametric d-flex gap-3">
 
-                    <img src="/images/wind (1).png" alt="" width="35px">
+                    <img src="/images/hot.png" alt="" width="35px">
                     <div>
-                        <h6 class="m-0">metric name</h6>
-                        <h6 class="m-0">metric value</h6>
+                        <h6 class="m-0">Feels_Like</h6>
+                        <h6 class="m-0" id="feelsLike">-</h6>
                     </div>
 
                 </div>
                 <div class="extrametric d-flex gap-3">
 
-                    <img src="/images/wind (1).png" alt="" width="35px">
+                    <img src="/images/eye.png" alt="" width="35px">
                     <div>
-                        <h6 class="m-0">metric name</h6>
-                        <h6 class="m-0">metric value</h6>
+                        <h6 class="m-0">Visibility</h6>
+                        <h6 class="m-0" id="visibility">-</h6>
                     </div>
 
                 </div>
@@ -273,6 +273,10 @@
             $('#cityName')[0].innerText=responseCityName;
             $('#cityTemp')[0].innerText=responseTemp;
             $('#skyDesc')[0].innerText=skyDescription;
+            $("#humidity")[0].innerText=formattedData.main.humidity
+            $("#pressure")[0].innerText=formattedData.main.pressure
+            $("#feelsLike")[0].innerText=formattedData.main.feels_like
+            $("#visibility")[0].innerText=formattedData.visibility
 
             let properDate=dateFormat(formattedData.dt);
             let date=properDate.split(',')[0];
