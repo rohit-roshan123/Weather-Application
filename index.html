@@ -136,20 +136,20 @@
                     <div class="d-flex align-items-center justify-content-between">
                         <img src="/images/wind.png" width="40px">
                         <div class="text-center">
-                            <h6 class="m-0">Aqi Metric</h6>
-                            <h6 class="m-0">0</h6>
+                            <h6 class="m-0" id="co">Aqi Metric</h6>
+                            <h6 class="m-0" id="covalue">0</h6>
                         </div>
                         <div class="text-center">
-                            <h6 class="m-0">Aqi Metric</h6>
-                            <h6 class="m-0">0</h6>
+                            <h6 class="m-0" id="o3">Aqi Metric</h6>
+                            <h6 class="m-0" id="o3value">0</h6>
                         </div>
                         <div class="text-center">
-                            <h6 class="m-0">Aqi Metric</h6>
-                            <h6 class="m-0">0</h6>
+                            <h6 class="m-0" id="no2">Aqi Metric</h6>
+                            <h6 class="m-0" id="no2value">0</h6>
                         </div>
                         <div class="text-center">
-                            <h6 class="m-0">Aqi Metric</h6>
-                            <h6 class="m-0">0</h6>
+                            <h6 class="m-0" id="so2">Aqi Metric</h6>
+                            <h6 class="m-0" id="so2value">0</h6>
                         </div>
                     </div>
 
@@ -236,6 +236,30 @@
             return date.toLocaleString();
         }
 
+        async function fetchaqidata(lat, lon){
+
+            let fetcheddata = await fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=28abf267a849d0bd9744aafb681b4acf`);
+            let formatteddata =await fetcheddata.json();
+            console.log(formatteddata);
+            let list=formatteddata.list[0].components;
+            console.log(list);
+
+            $('#co')[0].innerText="co";
+            $('#covalue')[0].innerText=list.co;
+
+
+            $('#o3')[0].innerText="o3";
+            $('#o3value')[0].innerText=list.o3;
+
+            $('#no2')[0].innerText="no2";
+            $('#no2value')[0].innerText=list.no2;
+
+            $('#so2')[0].innerText="so2";
+            $('#so2value')[0].innerText=list.so2;
+
+
+        }
+
         async function fetchData(){
             let cityName=document.getElementsByClassName('inputfield')[0].value;
             console.log('current city', cityName);
@@ -265,6 +289,11 @@
 
             $('#sunrisetime')[0].innerText=propersunrisetime;
             $('#sunsettime')[0].innerText=propersunsettime;
+
+            let lat=formattedData.coord.lat;
+            let long=formattedData.coord.lon;
+
+            fetchaqidata(lat, long);
 
 
         }
