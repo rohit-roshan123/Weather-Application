@@ -16,23 +16,23 @@
     <div class="searchBar">
         <div class="searchBarParentDiv">
         <input type="text" class="inputfield" placeholder="Search City">
-        <img src="./images/search.png" alt="" width="35px" class="searchIcon">
+        <img src="./images/search.png" alt="" width="35px" class="searchIcon" onclick="fetchData()">
         </div>
     </div>
     <div class="mainContentParentDiv d-flex">
         <div class="leftDiv">
             <div class="currentTempDiv leftChild p-3 d-flex flex-column gap-2">
                 <h6 class="m-0" id="cityName">City Name</h6>
-                <h5 class="m-0" id="cityTemp">0 &deg;C</h5>
+                <h5 class="m-0" ><span id="cityTemp">0</span> &deg;C</h5>
                 <h6 class="m-0" id="skyDesc">sky description</h6>
                 <hr class="line">
                 <div class="d-flex gap-2">
                     <img src="./images/calendar.png" alt="" width="25px">
-                    <h6 class="m-0">Date</h6>
+                    <h6 class="m-0" id="date">Date</h6>
                 </div>
                 <div class="d-flex gap-2">
                     <img src="./images/time.png" alt="" width="25px">
-                    <h6 class="m-0">Time</h6>
+                    <h6 class="m-0" id="time">Time</h6>
                 </div>
 
             </div>
@@ -164,7 +164,7 @@
                         <img src="./images/sun (1).png" width="80px">
                         <div class="d-flex flex-column gap-1">
                             <h5 class="m-0">Sunrise</h5>
-                            <h5 class="m-0">6:30 AM</h5>
+                            <h5 class="m-0" id="sunrisetime">6:30 AM</h5>
                         </div>
 
                     </div>
@@ -173,7 +173,7 @@
                         <img src="./images/moon.png" width="55px">
                         <div class="d-flex flex-column gap-1">
                             <h5 class="m-0">Sunset</h5>
-                            <h5 class="m-0">6:30 PM</h5>
+                            <h5 class="m-0" id="sunsettime">6:30 PM</h5>
                         </div>
                     </div>
 
@@ -224,5 +224,54 @@
     
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js" integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script>
+
+        function dateFormat(timestamp){
+
+            const date = new Date(timestamp * 1000);
+            console.log(date.toUTCString());
+            console.log(date.toLocaleString());
+            return date.toLocaleString();
+        }
+
+        async function fetchData(){
+            let cityName=document.getElementsByClassName('inputfield')[0].value;
+            console.log('current city', cityName);
+            let requestData =await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=28abf267a849d0bd9744aafb681b4acf&units=metric`);
+            let formattedData=await requestData.json();
+            console.log(formattedData);
+            let responseCityName = formattedData.name;
+            let responseTemp = formattedData.main.temp;
+            let skyDescription = formattedData.weather[0].description;
+
+            $('#cityName')[0].innerText=responseCityName;
+            $('#cityTemp')[0].innerText=responseTemp;
+            $('#skyDesc')[0].innerText=skyDescription;
+
+            let properDate=dateFormat(formattedData.dt);
+            let date=properDate.split(',')[0];
+            let time=properDate.split(',')[1];
+
+            $('#date')[0].innerText=date;
+            $('#time')[0].innerText=time;
+
+            let sunriseTimestamp=formattedData.sys.sunrise;
+            let sunsetTimestamp=formattedData.sys.sunset;
+
+            let propersunrisetime=dateFormat(sunriseTimestamp).split(',')[1];
+            let propersunsettime=dateFormat(sunsetTimestamp).split(',')[1];
+
+            $('#sunrisetime')[0].innerText=propersunrisetime;
+            $('#sunsettime')[0].innerText=propersunsettime;
+
+
+        }
+
+
+
+
+    </script>
   </body>
 </html>
