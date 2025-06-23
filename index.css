@@ -1,6 +1,6 @@
 body{
 
-    background: url(images/pexels-pixabay-33834.jpg);
+    background: url(images/2148933766.jpg);
     background-position: bottom;
     background-attachment: fixed;
     font-family: "comfortaa", sans-serif;
@@ -133,7 +133,7 @@ body{
 }
 
 
-.todaytemp{
+.todayTemp{
 
     background: rgba(212, 212, 212, 0.4);
     width: fit-content;
@@ -145,4 +145,13 @@ body{
     gap: 10px;
     justify-content: center;
     align-items: center;
+}
+
+#todayTempContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 12px;
+    padding-right: 15px;
 }
