@@ -189,37 +189,11 @@
             </div>
 
 
-            <div class="rightrow rowthree d-flex flex-column gap-2 p-3">
+            <div class="rightRow rowThree d-flex flex-column gap-2">
                 <h5 class="m-0">Today</h5>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="todaytemp">
-                        <h6 class="m-0">9:00 AM</h6>
-                        <img src="./images/clouds.png" width="40px">
-                        <h5 class="m-0">5 &deg;C</h5>
-                    </div>
-                    <div class="todaytemp">
-                        <h6 class="m-0">9:00 AM</h6>
-                        <img src="./images/clouds.png" width="40px">
-                        <h5 class="m-0">5 &deg;C</h5>
-                    </div>
-                    <div class="todaytemp">
-                        <h6 class="m-0">9:00 AM</h6>
-                        <img src="./images/clouds.png" width="40px">
-                        <h5 class="m-0">5 &deg;C</h5>
-                    </div>
-                    <div class="todaytemp">
-                        <h6 class="m-0">9:00 AM</h6>
-                        <img src="./images/clouds.png" width="40px">
-                        <h5 class="m-0">5 &deg;C</h5>
-                    </div>
-                    <div class="todaytemp">
-                        <h6 class="m-0">9:00 AM</h6>
-                        <img src="./images/clouds.png" width="40px">
-                        <h5 class="m-0">5 &deg;C</h5>
-                    </div>
+                <div class="d-flex justify-content-between" id="todayTempContainer">
+                   
                 </div>
-
-
             </div>
 
         </div>
@@ -303,6 +277,48 @@
     }
 }
 
+async function todayTemps(lat, lon) {
+            const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=28abf267a849d0bd9744aafb681b4acf&units=metric`;
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error("Failed to fetch weather data");
+                }
+                const data = await response.json();
+
+                let todayDate = new Date().toISOString().split("T")[0]; // Get today's date (YYYY-MM-DD)
+                let todayForecasts = data.list.filter(item => item.dt_txt.startsWith(todayDate)); // Get today's data
+
+                // Select specific time intervals (e.g., every 3 hours from the API)
+                let selectedHours = todayForecasts.slice(0, 6); // Get first 6 hourly forecasts
+
+                let todayHtml = "";
+                selectedHours.forEach(item => {
+                    let time = new Date(item.dt_txt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }); // Format time
+                    let temp = item.main.temp.toFixed(1); // Round temperature
+                    let icon = item.weather[0].icon; // Weather icon
+
+                    todayHtml += `
+                        <div class="todayTemp">
+                            <h6 class="m-0">${time}</h6>
+                            <img src="./images/cloudy.png" alt="" width="35px">
+                            <h5>${temp}&deg;C</h5>
+                        </div>
+                    `;
+                });
+
+                document.getElementById("todayTempContainer").innerHTML = todayHtml;
+
+            } catch (error) {
+                console.error(error);
+                alert("Failed to retrieve weather data. Please check your API key.");
+            }
+        }
+
+
+
+
 
 
 
@@ -345,6 +361,9 @@
 
             fetchaqidata(lat, long);
             getNextFiveDaysWeather();
+            todayTemps(lat, long);
+
+
 
 
         }
